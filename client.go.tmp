@@ -1,0 +1,174 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"math/big"
+
+	"example.com/ece1770/contracts/store"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/accounts/keystore"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/ethclient"
+)
+
+func test(client *ethclient.Client) {
+	tx, pending, err := client.TransactionByHash(context.Background(), common.HexToHash("0x451abf64fbb7fc0af5a7a57bcf6068c3fa4785cbdea4929914de2527c4c7e8ad"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("pending %t\n", pending)
+	txReceipt, err := client.TransactionReceipt(context.Background(), tx.Hash())
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(txReceipt.ContractAddress)
+
+}
+
+func getBalance(client *ethclient.Client) {
+	account := common.HexToAddress("0xdf667646cb74d7d049f9991162ef8534434568d9")
+	balance, err := client.BalanceAt(context.Background(), account, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(balance) // 25893180161173005034
+
+	account = common.HexToAddress("0xa9fcabafc651425c0f77acf7c46017a59d9b28d3")
+	balance, err = client.BalanceAt(context.Background(), account, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(balance) // 25893180161173005034
+
+}
+
+func checkContrast(client *ethclient.Client) {
+	// a random user account address
+	address := common.HexToAddress("0xdf667646cb74d7d049f9991162ef8534434568d9")
+	bytecode, err := client.CodeAt(context.Background(), address, nil) // nil is latest block
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	isContract := len(bytecode) > 0
+
+	fmt.Printf("is contract: %v\n", isContract) // is contract: true
+
+	// a random user account address
+	address = common.HexToAddress("0xa9fcabafc651425c0f77acf7c46017a59d9b28d3")
+	bytecode, err = client.CodeAt(context.Background(), address, nil) // nil is latest block
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	isContract = len(bytecode) > 0
+
+	fmt.Printf("is contract: %v\n", isContract) // is contract: false
+}
+
+func main() {
+	client, err := ethclient.Dial("./test-chain-dir/geth.ipc")
+	if err != nil {
+		log.Fatal(err)
+	}
+	getBalance(client)
+	checkContrast(client)
+	test(client)
+	// geth --datadir test-chain-dir --http --dev --http.corsdomain "https://remix.ethereum.org,http://remix.ethereum.org"
+	// geth --datadir ./ --signer=./clef/clef.ipc --goerli --syncmode light --http
+	// clef --keystore ./keystore --configdir ./clef --chainid 5
+
+	gasPrice, err := client.SuggestGasPrice(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	chainID, err := client.NetworkID(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ks := keystore.NewKeyStore("./test-chain-dir/keystore", keystore.StandardScryptN, keystore.StandardScryptP)
+	signer := types.LatestSignerForChainID(chainID)
+	account := ks.Accounts()[2]
+	fmt.Println(account.Address)
+	nonce, err := client.PendingNonceAt(context.Background(), account.Address)
+	if err != nil {
+		log.Fatal(err)
+	}
+	auth := &bind.TransactOpts{
+		From: account.Address,
+		Signer: func(address common.Address, tx *types.Transaction) (*types.Transaction, error) {
+			if address != account.Address {
+				return nil, bind.ErrNotAuthorized
+			}
+			signature, err := ks.SignHashWithPassphrase(account, "hongxianggeng", signer.Hash(tx).Bytes())
+			// signature, err := ks.SignHash(account, signer.Hash(tx).Bytes())
+
+			if err != nil {
+				return nil, err
+			}
+			return tx.WithSignature(signer, signature)
+		},
+		Context: context.Background(),
+	}
+	auth.Nonce = big.NewInt(int64(nonce))
+	auth.Value = big.NewInt(0)     // in wei
+	auth.GasLimit = uint64(300000) // in units
+	auth.GasPrice = gasPrice
+
+	// input := "1.0"
+	// fmt.Printf("store constructor\n")
+	// fmt.Println(store.StorageABI)
+	// address, tx, instance, err := store.DeployStorage(auth, client)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Println(address.Hex())   // 0x147B8eb97fD247D06C4006D269c90C1908Fb5D54
+	// fmt.Println(tx.Hash().Hex()) // 0xdae8ba5444eefdc99f4d45cd0c4f24056cba6a02cefbf78066ef9f4188ff7dc0
+
+	// _ = instance
+	// fmt.Println(tx.Data())
+
+	address := common.HexToAddress("0x7Cd3FE1cFc7248892FE4368783285faa26a14f13")
+	instance, err := store.NewStorage(address, client)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// fmt.Println("contract is loaded")
+	// fmt.Println(client.CodeAt(context.Background(), common.HexToAddress("0xdf667646CB74D7D049F9991162eF8534434568D9"), nil))
+
+	// v := big.NewInt(10)
+	// result, err := instance.Store(auth, v)
+	result, err := instance.Retrieve(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(result) // "bar"
+
+	// key := [32]byte{}
+	// value := [32]byte{}
+	// copy(key[:], []byte("foo"))
+	// copy(value[:], []byte("bar"))
+
+	// tx, err := instance.SetItem(auth, key, value)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Printf("tx sent: %s", tx.Hash().Hex()) // tx sent: 0x8d490e535678e9a24360e955d75b27ad307bdfb97a1dca51d0f3035dcee3e870
+
+	// result, err := instance.Items(nil, key)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Println(string(result[:])) // "bar"
+
+}

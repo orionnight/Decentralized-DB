@@ -1,0 +1,17 @@
+t=2022-02-19T20:31:44-0500 lvl=info msg=Configured api=signer audit log=audit.log
+t=2022-02-19T20:34:06-0500 lvl=info msg=Version    api=signer type=request metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}"
+t=2022-02-19T20:34:06-0500 lvl=info msg=Version    api=signer type=response data=6.1.0 error=nil
+t=2022-02-19T21:46:20-0500 lvl=info msg=Configured api=signer audit log=audit.log
+t=2022-02-19T21:46:26-0500 lvl=info msg=Version    api=signer type=request metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}"
+t=2022-02-19T21:46:26-0500 lvl=info msg=Version    api=signer type=response data=6.1.0 error=nil
+t=2022-02-19T22:34:17-0500 lvl=info msg=List       api=signer type=request  metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}"
+t=2022-02-19T22:34:42-0500 lvl=info msg=List       api=signer type=response data="[0xf7157e022db032C63A0d557D46c205BC00cEDdfc 0x5Ed61D6D96432Cfa5F973ffFdC0cBb5A7247FD58 0xdAAf6204a1BF89A1670614988168e5EF534860E3]"
+t=2022-02-19T22:37:06-0500 lvl=info msg=SignTransaction api=signer type=request  metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}" tx="{\"from\":{},\"to\":\"0x5Ed61D6D96432Cfa5F973ffFdC0cBb5A7247FD58\",\"gas\":\"0x5208\",\"gasPrice\":null,\"maxFeePerGas\":\"0x59682f10\",\"maxPriorityFeePerGas\":\"0x59682f00\",\"value\":\"0x2386f26fc10000\",\"nonce\":\"0x0\",\"data\":\"0x\",\"accessList\":[],\"chainId\":\"0x5\"}" methodSelector=<nil>
+t=2022-02-19T22:37:22-0500 lvl=info msg=SignTransaction api=signer type=response data=<nil> error="could not decrypt key with given password"
+t=2022-02-19T22:37:39-0500 lvl=info msg=SignTransaction api=signer type=request  metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}" tx="{\"from\":{},\"to\":\"0x5Ed61D6D96432Cfa5F973ffFdC0cBb5A7247FD58\",\"gas\":\"0x5208\",\"gasPrice\":null,\"maxFeePerGas\":\"0x59682f10\",\"maxPriorityFeePerGas\":\"0x59682f00\",\"value\":\"0x2386f26fc10000\",\"nonce\":\"0x0\",\"data\":\"0x\",\"accessList\":[],\"chainId\":\"0x5\"}" methodSelector=<nil>
+t=2022-02-19T22:37:52-0500 lvl=info msg=SignTransaction api=signer type=response data=02f87105808459682f008459682f10825208945ed61d6d96432cfa5f973fffdc0cbb5a7247fd58872386f26fc1000080c080a0c9548b3a098cc65a134ea7d02c31568643f4adafc05e606be97aa682ebaeb989a04cc5ba6c45ab4931be410b78c4608471d6692a8af62e0d304b7fd25fad544d28 error=nil
+t=2022-02-19T23:05:17-0500 lvl=info msg=List            api=signer type=request  metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}"
+t=2022-02-19T23:05:21-0500 lvl=info msg=List            api=signer type=response data="[0xf7157e022db032C63A0d557D46c205BC00cEDdfc 0x5Ed61D6D96432Cfa5F973ffFdC0cBb5A7247FD58]"
+t=2022-02-20T11:19:43-0500 lvl=info msg=Configured api=signer audit log=audit.log
+t=2022-02-20T11:19:52-0500 lvl=info msg=Version    api=signer type=request metadata="{\"remote\":\"NA\",\"local\":\"NA\",\"scheme\":\"ipc\",\"User-Agent\":\"\",\"Origin\":\"\"}"
+t=2022-02-20T11:19:52-0500 lvl=info msg=Version    api=signer type=response data=6.1.0 error=nil

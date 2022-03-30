@@ -1,0 +1,32 @@
+=============== Feb 19, 2022 (EST) ===============
+20:34:06.209173 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:34:06.212226 db@open opening
+20:34:06.212444 version@stat F·[] S·0B[] Sc·[]
+20:34:06.213452 db@janitor F·2 G·0
+20:34:06.213473 db@open done T·1.229852ms
+20:44:14.326013 db@close closing
+20:44:14.326069 db@close done T·42.441µs
+=============== Feb 19, 2022 (EST) ===============
+21:46:26.622629 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:46:26.622719 version@stat F·[] S·0B[] Sc·[]
+21:46:26.622739 db@open opening
+21:46:26.622781 journal@recovery F·1
+21:46:26.623442 journal@recovery recovering @1
+21:46:26.625032 memdb@flush created L0@2 N·71 S·10KiB "ser..k\xb4\xda,v66":"vtN..c|\x1f,v69"
+21:46:26.625827 version@stat F·[1] S·10KiB[10KiB] Sc·[0.25]
+21:46:26.630260 db@janitor F·3 G·0
+21:46:26.630279 db@open done T·7.532125ms
+23:57:59.269638 db@close closing
+23:57:59.269679 db@close done T·42.02µs
+=============== Feb 20, 2022 (EST) ===============
+11:19:52.621961 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:19:52.622055 version@stat F·[1] S·10KiB[10KiB] Sc·[0.25]
+11:19:52.622070 db@open opening
+11:19:52.622106 journal@recovery F·1
+11:19:52.622504 journal@recovery recovering @3
+11:19:52.625222 memdb@flush created L0@5 N·679 S·119KiB "ser..c|\x1f,v253":"vtN..c|\x1f,v254"
+11:19:52.625738 version@stat F·[2] S·130KiB[130KiB] Sc·[0.50]
+11:19:52.630114 db@janitor F·4 G·0
+11:19:52.630133 db@open done T·8.059377ms
+15:59:18.517356 db@close closing
+15:59:18.517425 db@close done T·66.697µs

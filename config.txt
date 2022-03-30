@@ -1,0 +1,21 @@
+account: 0xf7157e022db032C63A0d557D46c205BC00cEDdfc
+password: hongxianggeng
+path: /home/ubuntu/ECE1770/keystore/UTC--2022-02-20T01-27-18.300898248Z--f7157e022db032c63a0d557d46c205bc00ceddfc
+
+account: 0x5Ed61D6D96432Cfa5F973ffFdC0cBb5A7247FD58
+password: hongxianggeng
+path: /home/ubuntu/ECE1770/keystore/UTC--2022-02-20T01-28-51.412464962Z--5ed61d6d96432cfa5f973fffdc0cbb5a7247fd58
+
+account: 0xAad96F6D94aB448ADdaC59752c6F924aa41946EB
+password: my_password
+path: /home/ubuntu/ECE1770/keystore/UTC--2022-02-20T01-27-18.300898248Z--f7157e022db032c63a0d557d46c205bc00ceddfc
+
+
+
+privateKeyBytes: 8f31828f79abc523e5675cf2b1dfdd7a7dd25b458cd089baf1c8e3c7ec1ec906
+publicKeyBytes: 5883fa6c7005fa7ad0e430e8e77c95c01752c89f85563fff9f4b004df3d55fb592919b165bddf869fb35f6196c8ee8c241df3d86612541d161b7aa2b68a81e78
+address: 0x51016AD4D9133bf79cCb05559a7778f5A41d2255
+hash: 0x51016ad4d9133bf79ccb05559a7778f5a41d2255
+
+contract address: 0x0ca8d3246Aa82E6Eb8A0F78a745D28b8BB858a82
+transaction: 0xd7d6cfee434c5ab982e86c484db18bc12ee900bf1c0eddf3c78b49ab5ccee0ef
