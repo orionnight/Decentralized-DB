@@ -1,0 +1,13 @@
+8b619f13bed0760ed7f33e0d326874a24e5e257ecb78ef34f4d1d8b50a0d44b0
+
+termininal 1:
+ganache -d
+
+terminal 2:
+sudo go run main.go
+
+curl -X POST http://localhost:8080/user/login -H 'Content-Type: application/json' -d '{"privateKeyHex":"b0057716d5917badaf911b193b12b910811c1497b5bada8d7711f758981c3773"}'
+
+
+curl -X POST http://localhost:8080/db/create -H 'Content-Type: application/json' -d '{"name": "hr", "email": "heran@123.com", "password": "123"}'
+
