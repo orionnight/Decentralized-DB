@@ -3,9 +3,11 @@ package user
 import (
 	"context"
 	"crypto/ecdsa"
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/big"
+	"net/http"
 
 	"example.com/ece1770/logger"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -57,6 +59,7 @@ func Login(c *gin.Context) {
 			logger.InternalLogger.WithField("component", "user-login").Error(balance)
 		}
 		bcuser = &BlockChainUser{privateKeyHex: privateKeyHex, accountHex: account.Hex()}
+		c.String(http.StatusOK, "User login successful!")
 		fmt.Println("User login successful!")
 		go transactionListener()
 	} else {
@@ -99,11 +102,17 @@ func transactionListener() {
 			// fmt.Println(len(block.Transactions())) // 7
 
 			for _, tx := range block.Transactions() {
-				fmt.Println(string(tx.Data()))
-				// if tx.To().Hex() != GetAccountHex() {
-				// 	// Based on data do sync
-				// 	fmt.Println(string(tx.Data()))
-				// }
+				if tx.To().Hex() != GetAccountHex() {
+					// Based on data do sync
+					var res map[string]interface{}
+					json.Unmarshal(tx.Data(), &res)
+					var tmp map[string]interface{}
+					json.Unmarshal([]byte(res["arg"].(string)), &tmp)
+					tmp1, _ := json.MarshalIndent(tmp, "", "\t")
+					fmt.Println("Operation:\n", res["op"].(string))
+					fmt.Println("Argument:\n", string(tmp1))
+					// fmt.Println(string(tx.Data()))
+				}
 			}
 		}
 	}

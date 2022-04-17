@@ -17,7 +17,7 @@ func Ping(c *gin.Context) {
 }
 
 func HandleDBCreation(c *gin.Context) {
-	if !blockchain_user.CheckUserLogin() {
+	if !blockchain_user.CheckUserLogin(c) {
 		return
 	}
 
@@ -49,17 +49,18 @@ func HandleDBCreation(c *gin.Context) {
 		fmt.Printf("Error appending op to JSON. Err: %s", err)
 		return
 	}
-	// test sync
-	// SyncDBCreation(string(target))
 
 	transaction.SendRawTransaction(string(target), blockchain_user.GetPrivateKeyHex())
+
+	// test sync
+	// SyncDBCreation(string(target))
 
 	println("End db create, success!\n")
 }
 
 // http://142.150.199.223/db/delete?email=abby123@gmail.com
 func HandleDBDeletion(c *gin.Context) {
-	if !blockchain_user.CheckUserLogin() {
+	if !blockchain_user.CheckUserLogin(c) {
 		return
 	}
 	fmt.Println("Start db deletion...")
@@ -76,21 +77,27 @@ func HandleDBDeletion(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"isRemoved": true})
 
-	// var res map[string]interface{}
-	// res.op = "DELETE"
-	// res["arg"] = string(userEmail)
+	res := map[string]interface{}{
+		"op":  "DELETE",
+		"arg": string(userEmail),
+	}
+	target, err := json.Marshal(res)
+	if err != nil {
+		fmt.Printf("Error appending op to JSON. Err: %s", err)
+		return
+	}
+
+	transaction.SendRawTransaction(string(target), blockchain_user.GetPrivateKeyHex())
 
 	// test sync
-	target := string(userEmail)
-	transaction.SendRawTransaction(target, blockchain_user.GetPrivateKeyHex())
-	// SyncDBDeletion(target)
+	// SyncDBDeletion(string(target))
 
 	println("End db delete, success!\n")
 }
 
 // http://142.150.199.223/db/update?email=abby123@gmail.com&field=name&value=Rachel
 func HandleDBUpdate(c *gin.Context) {
-	if !blockchain_user.CheckUserLogin() {
+	if !blockchain_user.CheckUserLogin(c) {
 		return
 	}
 	fmt.Println("Start db update...")
@@ -119,23 +126,34 @@ func HandleDBUpdate(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, user)
 
-	// test sync
 	updateDB := UpdateDB{Email: userEmail, Field: field, Value: value}
 	jsonResp, err := json.MarshalIndent(updateDB, "", "\t")
 	if err != nil {
 		fmt.Printf("Error happened in JSON marshal. Err: %s", err)
 		return
 	}
-	target := string(jsonResp)
-	transaction.SendRawTransaction(target, blockchain_user.GetPrivateKeyHex())
-	// SyncDBUpdate(target)
+
+	res := map[string]interface{}{
+		"op":  "UPDATE",
+		"arg": string(jsonResp),
+	}
+	target, err := json.Marshal(res)
+	if err != nil {
+		fmt.Printf("Error appending op to JSON. Err: %s", err)
+		return
+	}
+
+	transaction.SendRawTransaction(string(target), blockchain_user.GetPrivateKeyHex())
+
+	// test sync
+	// SyncDBUpdate(string(target))
 
 	println("End db update, success!\n")
 }
 
 // http://142.150.199.223/db/find?email=abby123@gmail.com
 func HandleDBFind(c *gin.Context) {
-	if !blockchain_user.CheckUserLogin() {
+	if !blockchain_user.CheckUserLogin(c) {
 		return
 	}
 	fmt.Println("Start db find...")

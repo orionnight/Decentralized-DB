@@ -23,6 +23,24 @@ func SyncDBCreation(user string) {
 	println("End sync db create, success!\n")
 }
 
+// func SyncDBCreation( map[string]interface{}) {
+// 	println("Start sync db create...")
+
+// 	data := User{}
+
+// 	err := json.Unmarshal([]byte(user), &data)
+// 	if err != nil {
+// 		fmt.Println(err.Error())
+// 		//json: Unmarshal(non-pointer main.Request)
+// 	}
+// 	_, restErr := CreateUser(&data)
+// 	if restErr != nil {
+// 		fmt.Printf(fmt.Sprint(restErr.Status), restErr)
+// 		return
+// 	}
+// 	println("End sync db create, success!\n")
+// }
+
 func SyncDBDeletion(email string) {
 	println("Start sync db deletion...")
 

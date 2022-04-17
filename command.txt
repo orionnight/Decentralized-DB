@@ -11,3 +11,8 @@ curl -X POST http://localhost:8080/user/login -H 'Content-Type: application/json
 
 curl -X POST http://localhost:8080/db/create -H 'Content-Type: application/json' -d '{"name": "hr", "email": "heran@123.com", "password": "123"}'
 
+curl http://localhost:8080/db/find?email=heran@123.com
+
+curl http://localhost:8080/db/delete?email=abby123@gmail.com
+
+curl 'http://localhost:8080/db/update?email=heran@123.com&field=name&value=Rachel'
