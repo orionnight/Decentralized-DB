@@ -1,0 +1,3 @@
+# Decentralized-DB
+
+Current databases like MongoDB are mostly maintained by an independent facility meaning they are centralized, this introduces a potential single point of failure and security issue. In addition, these databases lack the function of providing a full history of the data changes. Therefore, we utilize blockchain technology to provide a database that is decentralized and it provides restful APIs for clients to interact with the local databases, and also to synchronize the database via the blockchain. It provides a complete and verifiable history of database changes. Since our solution makes the database's operation history immutable and trackable, this provides users with transparency and consistency.
